@@ -1,4 +1,7 @@
 from itertools import combinations
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 
 def held_karp_tsp(distance_matrix):
     n = len(distance_matrix)
@@ -34,8 +37,32 @@ def held_karp_tsp(distance_matrix):
         _, parent = C[(bits, parent)]
         bits = new_bits
     path.append(0)
-
     return list(reversed(path)), opt
+
+
+def draw_graph(path, distance_matrix):
+    G = nx.DiGraph()
+
+    for i in range(len(path) - 1):
+        G.add_edge(path[i], path[i + 1], weight=distance_matrix[path[i]][path[i + 1]])
+
+    pos = nx.circular_layout(G)
+    plt.figure(figsize=(12, 12)) 
+    sizes = [200 for _ in range(len(G))]
+    labels = {node: node for node in G.nodes()}
+    labels[0] = 'Start'
+
+    label_pos = {k: [v[0], v[1]] for k, v in pos.items()} 
+    offset = 0.1  
+    label_pos[0] = [label_pos[0][0] + offset, label_pos[0][1]]  
+
+    nx.draw(G, pos, with_labels=True, node_size=sizes, node_color="yellow")
+    nx.draw_networkx_labels(G, label_pos, labels, font_size=12)
+
+    edge_labels = nx.get_edge_attributes(G, "weight")
+    nx.draw_networkx_edge_labels(G, pos=pos, edge_labels=edge_labels)
+
+    plt.show()
 
 
 distance_matrix = [[0, 31278, 29741, 31041, 28908, 31707, 29159, 31249, 23949, 30979, 24674, 15765, 29457, 26758, 32002, 23125, 33014, 13570, 20226, 12665], 
@@ -60,77 +87,16 @@ distance_matrix = [[0, 31278, 29741, 31041, 28908, 31707, 29159, 31249, 23949, 3
                     [18723, 6952, 5536, 6715, 4794, 6916, 16186, 6922, 3936, 6652, 4686, 4090, 6176, 2632, 7676, 3274, 8688, 1422, 3604, 0]]
 
 
-# Using Held-Karp algorithm to find the shortest route
 shortest_route, total_distance = held_karp_tsp(distance_matrix)
+print()
+print()
+print("Shortest route = ",end="")
 print(shortest_route)
-print(total_distance)
+print("Total distance = ",end="")
+print(total_distance,end=" ")
+print("m")
+print()
+print()
+draw_graph(shortest_route, distance_matrix)
 
-# import matplotlib.pyplot as plt
-# import networkx as nx
-# import numpy as np
 
-# def draw_graph(path, distance_matrix):
-#     G = nx.DiGraph()
-
-#     # Add nodes and edges
-#     for i in range(len(path) - 1):
-#         G.add_edge(path[i], path[i + 1], weight=distance_matrix[path[i]][path[i + 1]])
-
-#     # Custom positions for nodes in circular layout according to the path
-#     # pos = {node: (np.cos(angle)*2, np.sin(angle)*2) for node, angle in zip(path, np.linspace(0, 2*np.pi, len(path), endpoint=False))}
-#     # pos = nx.spring_layout(G)
-#     # # Draw the graph
-#     # nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=300)
-
-#     # # Optionally, draw edge labels
-#     # edge_labels = nx.get_edge_attributes(G, 'weight')
-#     # nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-
-#     # plt.show()
-#     layout = nx.spring_layout(G)
-
-# # Use a list for node_sizes
-#     sizes = [200 for _ in range (20)]
-#     nx.draw(G, layout, with_labels=True, node_size=sizes, node_color="yellow")
-
-# # Get weights of each edge and assign to labels
-#     labels = nx.get_edge_attributes(G, "weight")
-
-#     # # Draw edge labels using layout and list of labels
-#     nx.draw_networkx_edge_labels(G,pos=layout, edge_labels=labels)
-#     plt.show()
-
-# # Draw the graph
-# draw_graph(shortest_route, distance_matrix)
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-
-def draw_graph(path, distance_matrix, edge_length_factor=2.0):
-    G = nx.DiGraph()
-
-    # Add nodes and edges
-    for i in range(len(path) - 1):
-        G.add_edge(path[i], path[i + 1], weight=distance_matrix[path[i]][path[i + 1]])
-
-    # Create a layout with custom node positions and longer edges
-    layout = {}
-    for i, node in enumerate(path):
-        angle = i * (2 * np.pi / len(path))
-        x = np.cos(angle) * edge_length_factor
-        y = np.sin(angle) * edge_length_factor
-        layout[node] = (x, y)
-
-    # Draw the graph with longer edges
-    nx.draw(G, layout, with_labels=True, node_size=200, node_color="lightblue")
-
-    # Get weights of each edge and assign to labels
-    labels = nx.get_edge_attributes(G, "weight")
-
-    # Draw edge labels using layout and list of labels
-    nx.draw_networkx_edge_labels(G, pos=layout, edge_labels=labels)
-    plt.show()
-
-# Draw the graph with longer edges
-draw_graph(shortest_route, distance_matrix, edge_length_factor=2.5)

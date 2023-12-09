@@ -8,11 +8,11 @@ def initialize_data():
         'location_list': [
             '611+Jl+Raya+Terusan+Kopo', '27B+Jl+Tubagus+Ismail', '72F+Jl+Dipati+Ukur', 
             '314A+Jl+Ir+H+Juanda', '160+Jl+Cihampelas', '91+Jl+Ciumbuleuit', 
-            '6+Jl+Sukamaju', '58A+Jl+Cihampelas', '15+Jl+Cikondang', '32+Jl+Banda', 
+            '6+Jl+Sukamaju', '15+Jl+Cikondang', '32+Jl+Banda', 
             '41+Jl+Pahlawan', '27B+Jl+Surya+Sumantri', '25A+Jl+Cihapit', '170d+Jl+Setiabudi', 
-            '215+Jl+Pasir+Kaliki', 'Paris+Van+Java+Mall', '150+Jl+Cikutra', 'Istana+BEC', 
-            'Mixue+Dago+Atas', '30+Jl+Kebon+Kawung', '122B+Jl+Pajajaran', '55+Jl+Laswi', 
-            '27+Jl+Gegerkalong+Girang', '125+Jl+Cibadak', '84b+Jl+lengkong+Kecil'
+            '215+Jl+Pasir+Kaliki', '150+Jl+Cikutra', 'Istana+BEC', 
+            'Mixue+Dago+Atas', '30+Jl+Kebon+Kawung', '122B+Jl+Pajajaran', 
+             '125+Jl+Cibadak'
         ]
     }
     return configuration
